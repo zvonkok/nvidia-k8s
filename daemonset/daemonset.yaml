@@ -1,0 +1,59 @@
+# Copyright 2017 Google Inc. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: nvidia-driver-installer
+spec:
+  template:
+    metadata:
+      labels:
+        name: nvidia-driver-installer
+    spec:
+      hostNetwork: true
+      hostPID: true
+      volumes:
+      - name: sys
+      	hostPath:
+	  path: /sys
+      - name: dev
+        hostPath:
+          path: /dev
+      - name: nvidia-install-dir-host
+        hostPath:
+          path: /opt
+      - name: host-mount
+        hostPath:
+          path: /
+      initContainers:
+      - image: docker.io/zvonkok/redhat:nvidia-daemonset-384.81
+        name: nvidia-driver-installer
+        resources:
+          requests:
+            cpu: 0.15
+        securityContext:
+          privileged: true
+        volumeMounts:
+	- name: sys
+	  mountPath: /sys
+        - name: nvidia-install-dir-host
+          mountPath: /opt
+        - name: dev
+          mountPath: /dev
+        - name: host-mount
+          mountPath: /host
+      containers:
+      - image: "gcr.io/google-containers/pause:2.0"
+        name: pause
