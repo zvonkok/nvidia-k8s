@@ -26,8 +26,8 @@ spec:
       hostPID: true
       volumes:
       - name: sys
-      	hostPath:
-	  path: /sys
+        hostPath:
+          path: /sys
       - name: dev
         hostPath:
           path: /dev
@@ -45,9 +45,16 @@ spec:
             cpu: 0.15
         securityContext:
           privileged: true
+        env:
+          - name: NVIDIA_INSTALL_DIR_HOST
+            value: /home/kubernetes/bin/nvidia
+          - name: NVIDIA_INSTALL_DIR_CONTAINER
+            value: /usr/local/nvidia
+          - name: ROOT_MOUNT_DIR
+            value: /root
         volumeMounts:
-	- name: sys
-	  mountPath: /sys
+        - name: sys
+          mountPath: /sys
         - name: nvidia-install-dir-host
           mountPath: /opt
         - name: dev
