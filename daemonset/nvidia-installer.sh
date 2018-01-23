@@ -1,5 +1,9 @@
 #!/bin/bash -x
 
+if [ -e /opt/nvidia ]; then
+	rm -rf /opt/nvidia
+fi
+
 atomic pull --storage ostree docker.io/zvonkok/redhat:nvidia-384.81
 atomic install --system --system-package=no docker.io/zvonkok/redhat:nvidia-384.81
 
@@ -22,11 +26,4 @@ cp /etc/profile.d/nvidia.sh /host/etc/profile.d/nvidia.sh
 chroot /host ldconfig
 
 nvidia-smi
-
-
-
-sleep 36000
-
-
-
 

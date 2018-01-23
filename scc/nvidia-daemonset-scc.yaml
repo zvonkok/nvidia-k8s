@@ -1,10 +1,11 @@
-allowHostDirVolumePlugin: false
-allowHostIPC: false
-allowHostNetwork: false
-allowHostPID: false
-allowHostPorts: false
-allowPrivilegedContainer: false
-allowedCapabilities: null
+allowHostDirVolumePlugin: true
+allowHostIPC: true
+allowHostNetwork: true
+allowHostPID: true
+allowHostPorts: true
+allowPrivilegedContainer: true
+allowedCapabilities:
+- '*'
 allowedFlexVolumes: null
 apiVersion: v1
 defaultAddCapabilities: 
@@ -13,13 +14,15 @@ fsGroup:
   type: RunAsAny
 groups:
 - system:cluster-admins
+- system:nodes
+- system:masters
 kind: SecurityContextConstraints
 metadata:
   annotations:
     kubernetes.io/description: anyuid provides all features of the restricted SCC
       but allows users to run with any UID and any GID.
   creationTimestamp: null
-  name: nvidia
+  name: nvidia-daemonset
 priority: 10
 readOnlyRootFilesystem: false
 requiredDropCapabilities:
@@ -27,17 +30,11 @@ runAsUser:
   type: RunAsAny
 seLinuxContext:
   type: RunAsAny
+seccompProfiles:
+- '*'
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:sample:use-root
-- system:admin
-- system:serviceaccount:sample:default
-- system:serviceaccount:run-as-root:rootroot
+- system:serviceaccount:nvidia:nvidia-daemonset
 volumes:
-- configMap
-- downwardAPI
-- emptyDir
-- persistentVolumeClaim
-- projected
-- secret
+- '*' 

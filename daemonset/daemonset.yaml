@@ -39,8 +39,8 @@ spec:
       - name: host-mount
         hostPath:
           path: /
-      serviceAccount: rootroot
-      serviceAccountName: rootroot
+      serviceAccount: nvidia-daemonset
+      serviceAccountName: nvidia-daemonset
       initContainers:
       - image: docker.io/zvonkok/redhat:nvidia-daemonset-384.81
         name: nvidia-driver-installer
@@ -50,13 +50,6 @@ spec:
         securityContext:
           privileged: true
           runAsUser: 0
-        env:
-          - name: NVIDIA_INSTALL_DIR_HOST
-            value: /home/kubernetes/bin/nvidia
-          - name: NVIDIA_INSTALL_DIR_CONTAINER
-            value: /usr/local/nvidia
-          - name: ROOT_MOUNT_DIR
-            value: /root
         volumeMounts:
         - name: sys
           mountPath: /sys
@@ -67,5 +60,5 @@ spec:
         - name: host-mount
           mountPath: /host
       containers:
-      - image: "gcr.io/google-containers/pause:2.0"
+      - image: "gcr.io/google-containers/pause"
         name: pause
