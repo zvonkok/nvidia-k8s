@@ -16,6 +16,8 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: nvidia-driver-installer
+  annotations:
+    openshift.io/scc: privileged
 spec:
   template:
     metadata:
@@ -37,6 +39,8 @@ spec:
       - name: host-mount
         hostPath:
           path: /
+      serviceAccount: rootroot
+      serviceAccountName: rootroot
       initContainers:
       - image: docker.io/zvonkok/redhat:nvidia-daemonset-384.81
         name: nvidia-driver-installer
@@ -45,6 +49,7 @@ spec:
             cpu: 0.15
         securityContext:
           privileged: true
+          runAsUser: 0
         env:
           - name: NVIDIA_INSTALL_DIR_HOST
             value: /home/kubernetes/bin/nvidia

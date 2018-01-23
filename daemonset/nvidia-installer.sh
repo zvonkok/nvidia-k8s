@@ -25,7 +25,7 @@ nvidia-smi
 
 
 
-
+sleep 36000
 
 
 

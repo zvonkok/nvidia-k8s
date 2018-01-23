@@ -1,4 +1,5 @@
 FROM registry.access.redhat.com/rhel7
+USER 0
 
 COPY yum.repos.d/* /etc/yum.repos.d/
 COPY *.pem /var/lib/yum/
