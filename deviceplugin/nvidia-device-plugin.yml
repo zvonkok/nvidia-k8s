@@ -9,6 +9,14 @@ spec:
       labels:
         name: nvidia-device-plugin-ds
     spec:
+      priorityClassName: system-node-critical
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: openshift.com/gpu-accelerator=true 
+                operator: Exists
       serviceAccount: nvidia-deviceplugin
       serivceAccountName: nvidia-deviceplugin
       containers:

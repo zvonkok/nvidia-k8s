@@ -14,6 +14,14 @@ spec:
       annotations:
         scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
+      priorityClassName: system-node-critical
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: openshift.com/gpu-accelerator=true 
+                operator: Exists
       serviceAccount: nvidia-deviceplugin
       serviceAccountName: nvidia-deviceplugin
       priorityClassName: system-node-critical
