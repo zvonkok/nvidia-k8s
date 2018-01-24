@@ -25,5 +25,7 @@ cp /etc/profile.d/nvidia.sh /host/etc/profile.d/nvidia.sh
 
 chroot /host ldconfig
 
+chcon -t svirt_sandbox_file_t /dev/nvidia*
+
 nvidia-smi
 
