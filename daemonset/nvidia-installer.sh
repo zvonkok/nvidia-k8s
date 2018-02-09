@@ -4,8 +4,8 @@ if [ -e /opt/nvidia ]; then
 	rm -rf /opt/nvidia
 fi
 
-atomic pull --storage ostree docker.io/zvonkok/redhat:nvidia-384.81
-atomic install --system --system-package=no docker.io/zvonkok/redhat:nvidia-384.81
+atomic pull --storage ostree docker.io/zvonkok/redhat:nvidia-384.81.1
+atomic install --system --system-package=no docker.io/zvonkok/redhat:nvidia-384.81.1
 
 # fix symlinks, something bogus going on
 ln -s /opt/nvidia/lib/libcuda.so.384.81 /opt/nvidia/lib/libcuda.so.1
@@ -26,6 +26,8 @@ cp /etc/profile.d/nvidia.sh /host/etc/profile.d/nvidia.sh
 chroot /host ldconfig
 
 chcon -t svirt_sandbox_file_t /dev/nvidia*
+chcon -t svirt_sandbox_file_t /host/opt/nvidia/lib/*
+chcon -t svirt_sandbox_file_t /host/opt/nvidia/bin/*
 
 nvidia-smi
 

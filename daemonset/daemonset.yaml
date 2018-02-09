@@ -49,7 +49,7 @@ spec:
       serviceAccount: nvidia-daemonset
       serviceAccountName: nvidia-daemonset
       initContainers:
-      - image: docker.io/zvonkok/redhat:nvidia-daemonset-384.81
+      - image: docker.io/zvonkok/redhat:nvidia-daemonset-384.81.1
         name: nvidia-driver-installer
         resources:
           requests:

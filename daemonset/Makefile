@@ -1,6 +1,6 @@
 USERNAME := zvonkok
 REPO := redhat
-VERSION := 384.81
+VERSION := 384.81.1
 KERNEL := $(shell uname -r)
 
 all: 
