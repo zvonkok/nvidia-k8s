@@ -19,6 +19,8 @@ spec:
                 operator: Exists
       serviceAccount: nvidia-deviceplugin
       serivceAccountName: nvidia-deviceplugin
+      hostNetwork: true
+      hostPID: true
       containers:
       - image: nvidia/k8s-device-plugin:1.9
         name: nvidia-device-plugin-ctr
