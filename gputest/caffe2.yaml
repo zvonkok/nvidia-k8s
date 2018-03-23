@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: caffe2 
+  namespace: nvidia 
+spec:
+  hostNetwork: true
+  restartPolicy: OnFailure
+  containers:
+    - name: caffe2
+      image: "caffe2ai/caffe2"
+      command: ["jupyter"] 
+      args: ["notebook", "--allow-root"]
+      ports:
+      - containerPort: 8888
+      securityContext:
+        privileged: true
+      resources:
+        limits:
+          nvidia.com/gpu: 2 # requesting 2 GPU
